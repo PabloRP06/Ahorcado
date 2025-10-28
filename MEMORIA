@@ -1,0 +1,37 @@
+# Memoria Técnica: Clásico del Ahorcado (Web)
+
+## 🎯 Objetivo del Proyecto
+
+El principal objetivo de este proyecto fue crear una implementación clásica del juego "El Ahorcado" (Hangman) utilizando únicamente tecnologías front-end (HTML, CSS y JavaScript). El enfoque principal estuvo en el desarrollo de la lógica de juego y en la manipulación dinámica del DOM y las clases CSS para representar el progreso visual del ahorcado.
+
+## 🛠️ Stack Tecnológico
+
+| Tecnología | Rol | Uso Específico |
+| :--- | :--- | :--- |
+| **HTML5** | Estructura | Definición del tablero de juego, el área de la palabra, el teclado de botones, y los elementos (divs) que componen el dibujo del ahorcado. |
+| **CSS3** | Presentación y Dibujo | Estilos de la interfaz. **Lógica de Visibilidad:** Uso de selectores CSS anidados (ej. `.fallo-3 #man-head`) para lograr la progresión y acumulación visual de las partes del muñeco con cada fallo. |
+| **JavaScript (Vanilla JS)** | Lógica Central | Gestión de palabras aleatorias, procesamiento de intentos, actualización de la palabra adivinada, y manejo del contador de fallos. |
+
+## 🧠 Lógica de Juego y Progresión
+
+### 1. Gestión de Palabras
+* Una lista (`WORDS`) contiene todas las posibles palabras secretas (en mayúsculas).
+* Al iniciar, se elige una palabra aleatoria (`secretWord`).
+* La palabra se representa en pantalla como un array de guiones bajos (`guessedWord`).
+
+### 2. Detección de Aciertos/Fallos
+* La función `handleGuess(letter, button)` es el núcleo. Deshabilita el botón de la letra utilizada.
+* Si el intento es correcto, actualiza `guessedWord` y marca el botón como acierto (clase `correct`).
+* Si el intento es incorrecto, añade la letra a `wrongGuesses`, decrementa `remainingFalls`, y marca el botón como fallo (clase `wrong`).
+
+### 3. Progresión del Dibujo (CSS Acumulativo)
+La clave del juego es la progresión visual. Se utiliza un método acumulativo en CSS:
+
+* JavaScript añade una clase de estado al contenedor principal (ej. `hangman-display fallo-3`).
+* El CSS utiliza selectores para mostrar **todas las partes hasta ese fallo**. Por ejemplo, el selector para el fallo 3 muestra la cabeza, el cuerpo y el primer brazo simultáneamente.
+
+```css
+/* Ejemplo de selector acumulativo en CSS */
+.fallo-3 #man-head, .fallo-3 #man-body, .fallo-3 #man-arm-l {
+    display: block;
+}
